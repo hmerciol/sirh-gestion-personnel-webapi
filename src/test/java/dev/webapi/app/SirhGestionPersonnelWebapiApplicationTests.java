@@ -1,4 +1,4 @@
-package api;
+package dev.webapi.app;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
