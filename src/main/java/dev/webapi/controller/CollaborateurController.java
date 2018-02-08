@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,13 +38,13 @@ public class CollaborateurController {
 		return colRepo.findAll();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/{matricule}")
+	@GetMapping(path = "/{matricule}")
 	public Collaborateur voirCollaborateur(@PathVariable String matricule) {
 		return colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule)).findFirst()
 				.orElse(new Collaborateur());
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, path = "/{matricule}")
+	@PutMapping(path = "/{matricule}")
 	public void editerCollaborateur(@PathVariable String matricule, @RequestBody Collaborateur newCollaborateur) {
 		Collaborateur oldCollaborateur = colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
 				.findFirst().orElse(null);
@@ -58,13 +58,13 @@ public class CollaborateurController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/{matricule}/banque")
+	@GetMapping(path = "/{matricule}/banque")
 	public Bancaire voirBanque(@PathVariable String matricule) {
 		return colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
 				.map(Collaborateur::getBanque).findFirst().orElse(new Bancaire());
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, path = "/{matricule}/banque")
+	@PutMapping(path = "/{matricule}/banque")
 	public void editerBanque(@PathVariable String matricule, @RequestBody Bancaire newBanque) {
 		Collaborateur collaborateur = colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
 				.findFirst().orElse(null);
