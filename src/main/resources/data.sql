@@ -1,0 +1,2 @@
+INSERT INTO DEPARTEMENT (id,libelle) VALUES (1,'d1'),(2,'d2');
+INSERT INTO COLLABORATEUR (id,matricule,nom,prenom,departement) VALUES (3,'m1','n1','p1',1),(4,'m2','n2','p2',1),(5,'m3','n3','p3',2),(6,'m4','n4','p4',2);

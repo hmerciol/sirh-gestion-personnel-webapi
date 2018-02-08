@@ -1,4 +1,4 @@
-package dev.webapi.app;
+package dev.webapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

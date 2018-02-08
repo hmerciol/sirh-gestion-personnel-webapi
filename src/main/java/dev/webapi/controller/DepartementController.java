@@ -11,7 +11,7 @@ import dev.webapi.entite.Departement;
 import dev.webapi.repository.DepartementRepository;
 
 @RestController
-@RequestMapping("/departements")
+@RequestMapping("/api/departements")
 public class DepartementController {
 	
 	@Autowired
