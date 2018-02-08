@@ -1,5 +1,6 @@
 package dev.webapi.entite;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -11,6 +12,8 @@ public class Collaborateur extends Entite {
 	private String prenom;
 	@ManyToOne
 	private Departement departement;
+	@Embedded
+	private Bancaire banque;
 	
 	
 	/**
@@ -68,6 +71,20 @@ public class Collaborateur extends Entite {
 	 */
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
+	}
+	/**
+	 * Getter for the departement
+	 * @return the departement
+	 */
+	public Bancaire getBanque() {
+		return banque;
+	}
+	/**
+	 * Setter for the departement
+	 * @param departement the departement to set
+	 */
+	public void setBanque(Bancaire banque) {
+		this.banque = banque;
 	}
 
 }

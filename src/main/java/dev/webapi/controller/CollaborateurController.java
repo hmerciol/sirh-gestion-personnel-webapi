@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.webapi.entite.Bancaire;
 import dev.webapi.entite.Collaborateur;
 import dev.webapi.entite.Departement;
 import dev.webapi.repository.CollaborateurRepository;
@@ -36,22 +37,49 @@ public class CollaborateurController {
 		}
 		return colRepo.findAll();
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, path="/{matricule}")
+
+	@RequestMapping(method = RequestMethod.GET, path = "/{matricule}")
 	public Collaborateur voirCollaborateur(@PathVariable String matricule) {
-		return colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule)).findFirst().orElse(new Collaborateur());
+		return colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule)).findFirst()
+				.orElse(new Collaborateur());
 	}
-	
-	@RequestMapping(method=RequestMethod.PUT, path="/{matricule}")
+
+	@RequestMapping(method = RequestMethod.PUT, path = "/{matricule}")
 	public void editerCollaborateur(@PathVariable String matricule, @RequestBody Collaborateur newCollaborateur) {
-		Collaborateur oldCollaborateur = colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule)).findFirst().orElse(null);
-		if(oldCollaborateur == null) {
+		Collaborateur oldCollaborateur = colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
+				.findFirst().orElse(null);
+		if (oldCollaborateur == null) {
 			colRepo.save(newCollaborateur);
 		} else {
 			oldCollaborateur.setNom(newCollaborateur.getNom());
 			oldCollaborateur.setPrenom(newCollaborateur.getPrenom());
 			oldCollaborateur.setDepartement(newCollaborateur.getDepartement());
 			colRepo.save(oldCollaborateur);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/{matricule}/banque")
+	public Bancaire voirBanque(@PathVariable String matricule) {
+		return colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
+				.map(Collaborateur::getBanque).findFirst().orElse(new Bancaire());
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, path = "/{matricule}/banque")
+	public void editerBanque(@PathVariable String matricule, @RequestBody Bancaire newBanque) {
+		Collaborateur collaborateur = colRepo.findAll().stream().filter(col -> col.getMatricule().equals(matricule))
+				.findFirst().orElse(null);
+		if (collaborateur == null) {
+			return;
+		} else {
+			Bancaire oldBanque = collaborateur.getBanque();
+			if (oldBanque == null) {
+				collaborateur.setBanque(newBanque);
+			} else {
+				oldBanque.setLibelleBanque(newBanque.getLibelleBanque());
+				oldBanque.setBic(newBanque.getBic());
+				oldBanque.setIban(newBanque.getIban());
+			}
+			colRepo.save(collaborateur);
 		}
 	}
 
